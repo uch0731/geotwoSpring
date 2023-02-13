@@ -40,9 +40,9 @@ public class ConnectService {
     }
 
     public ArrayList<String> getTableNameList(String schema) throws SQLException{
-        this.schema = schema;
+        this.schema = schema.trim().toUpperCase();
         ArrayList<String> tableNames = new ArrayList<>();
-        ResultSet rs = conn.getMetaData().getTables(null, schema, null, null);
+        ResultSet rs = conn.getMetaData().getTables(null, this.schema, null, null);
         while(rs.next()) {
             String tableNm = rs.getString("TABLE_NAME");
             tableNames.add(tableNm);
@@ -53,9 +53,9 @@ public class ConnectService {
     }
 
     public ArrayList<ColumnInfo> getTableInfo(String tableNm) throws SQLException {
-        this.tableNm = tableNm;
+        this.tableNm = tableNm.trim().toUpperCase();
         ArrayList<ColumnInfo> columns = new ArrayList<>();
-        ResultSet rs = conn.getMetaData().getColumns(null, schema, tableNm, "%");
+        ResultSet rs = conn.getMetaData().getColumns(null, schema, this.tableNm, "%");
 
         while(rs.next()) {
             ColumnInfo temp = new ColumnInfo();
@@ -71,27 +71,29 @@ public class ConnectService {
 
     public ArrayList<ArrayList<String>> selectAllFromTable() throws SQLException {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
-        ArrayList<String> colName = new ArrayList<>();
-        ResultSet rs = conn.getMetaData().getColumns(null, schema, tableNm, "%");
+        ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
+        ArrayList<String> colNm = new ArrayList<>();
 
-        while(rs.next()) {
-            colName.add(rs.getString("COLUMN_NAME"));
+        for (int i = 0; i < columns.size(); i++) {
+            colNm.add(columns.get(i).getName());
         }
-        data.add(colName);
-        rs.close();
+        data.add(colNm);
 
         String query = "SELECT * FROM " + tableNm;
         PreparedStatement pst =conn.prepareStatement(query);
-        rs = pst.executeQuery();
+        pst.setFetchSize(1000);
+        ResultSet rs = pst.executeQuery();
 
         while(rs.next()) {
             ArrayList<String> temp = new ArrayList<>();
-            for(int i =0; i< getTableInfo(tableNm).size(); i++) {
+            for(int i =0; i< columns.size(); i++) {
+                System.out.println(i);
                 String tempData = rs.getString(i+1);
                 temp.add(tempData);
             }
             data.add(temp);
         }
+
         rs.close();
         pst.close();
         return data;
