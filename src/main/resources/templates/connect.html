@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <form action="/connect" method="post">
+        <div class="form-group">
+            <label for="host">Host</label>
+            <input type="text" id="host" name="host" placeholder="IP를 입력하세요">
+            <label for="port">Port</label>
+            <input type="text" id="port" name="port" placeholder="PORT를 입력하세요">
+            <label for="sid">Sid</label>
+            <input type="text" id="sid" name="sid" placeholder="SID를 입력하세요">
+            <label for="userNm">UserName</label>
+            <input type="text" id="userNm" name="userNm" placeholder="USER NAME을 입력하세요">
+            <label for="userPW">UserPW</label>
+            <input type="text" id="userPW" name="userPW" placeholder="USER PW를 입력하세요">
+            <label for="dbType">DBType</label>
+            <input type="text" id="dbType" name="dbType" placeholder="DB Type을 입력하세요">
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

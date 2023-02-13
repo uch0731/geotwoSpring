@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+DB Connect Success!
+<div class="container">
+    <form action="/show" method="post">
+        <div class="form-group">
+            <label for="schema">schema</label>
+            <input type="text" id="schema" name="schema" placeholder="schema를 입력하세요">
+        </div>
+        <button type="submit">입력</button>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>
