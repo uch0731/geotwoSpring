@@ -1,12 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 내부 css -->
+    <style>
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+  </style>
+
+</head>
 <body>
 <div class="container">
     <div>
         <table>
             <thead>
             <tr>
-                <th>테이블</th>
+                <th>TABLE NAME</th>
             </tr>
             </thead>
             <tbody>
@@ -18,7 +44,7 @@
     </div>
     <form action="/showCol" method="post">
         <div class="form-group">
-            <label for="tableNm">TableName</label>
+            <label for="tableNm">칼럼정보를 확인할 테이블 </label>
             <input type="text" id="tableNm" name="tableNm" placeholder="table이름을 입력하세요">
         </div>
         <button type="submit">입력</button>

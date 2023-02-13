@@ -71,10 +71,18 @@ public class ConnectService {
 
     public ArrayList<ArrayList<String>> selectAllFromTable() throws SQLException {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
+        ArrayList<String> colName = new ArrayList<>();
+        ResultSet rs = conn.getMetaData().getColumns(null, schema, tableNm, "%");
+
+        while(rs.next()) {
+            colName.add(rs.getString("COLUMN_NAME"));
+        }
+        data.add(colName);
+        rs.close();
 
         String query = "SELECT * FROM " + tableNm;
         PreparedStatement pst =conn.prepareStatement(query);
-        ResultSet rs = pst.executeQuery();
+        rs = pst.executeQuery();
 
         while(rs.next()) {
             ArrayList<String> temp = new ArrayList<>();

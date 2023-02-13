@@ -1,14 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 내부 css -->
+    <style>
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+  </style>
+
+</head>
 <body>
 <div class="container">
     <div>
         <table>
             <thead>
             <tr>
-                <th>이름</th>
-                <th>타입</th>
-                <th>사이즈</th>
+                <th>NAME</th>
+                <th>TYPE</th>
+                <th>SIZE</th>
             </tr>
             </thead>
             <tbody>
