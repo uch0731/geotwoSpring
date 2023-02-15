@@ -9,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -56,6 +59,33 @@ public class ConnectController {
         }catch (Exception e){
             return "/cxError";
         }
+    }
+    @GetMapping("/ex")
+    public String exController(Model model){
+        return "/connectEx";
+    }
+    @PostMapping("/connect2")
+    @ResponseBody
+    public HashMap<String, String> ajaxEx(UserDto user){
+        HashMap<String, String> result = new HashMap<>();
+        try{
+            if(cxService.connectDB(user)){
+                System.out.println("success");
+                result.put("status","success");
+            }else{
+                throw new Exception();
+            }
+
+        }catch (Exception e){
+            System.out.println("error");
+            result.put("status","fail");
+        }
+        return result;
+    }
+
+    @GetMapping("/success")
+    public String successController(Model model){
+        return "/cxSuccess";
     }
 
     @PostMapping(value = "/show")
