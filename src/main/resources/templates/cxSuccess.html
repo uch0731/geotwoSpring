@@ -6,34 +6,31 @@
 </head>
 <body>
 <div class="container">
-    <label for="schema">Host</label>
-    <input type="text" id="schema" placeholder="Host"><br>
-    <button onclick="postSchema()">Table List 보기</button>
+    <label for="schema">Schema</label>
+    <input type="text" id="schema" placeholder="Schema"><br>
+    <button onclick="postSchema()">Show Table List</button>
 </div>
+<div id="table-list"></div>
+<div id="column-list"></div>
 <script>
     function postSchema() {
-      const xhr = new XMLHttpRequest();
-      const url = '/show';
-      const schema = document.getElementById('schema').value;
-      const params = `schema=${schema}`;
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        const xhr = new XMLHttpRequest();
+        const url = '/show';
+        const schema = document.getElementById('schema').value;
+        const params = `schema=${schema}`;
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-      xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const result = JSON.parse(this.responseText);
-          if (result.status === 'success') {
-            alert('Connection successful');
-            location.replace('/success');
-          } else {
-            alert('Connection failed');
-            location.replace('/ex');
-          }
-        }
-    };
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                // Show table list under the button
+                const tableListDiv = document.getElementById('table-list');
+                tableListDiv.innerHTML = this.responseText;
+            }
+        };
 
-      xhr.send(params);
+        xhr.send(params);
     }
-  </script>
+</script>
 </body>
 </html>
