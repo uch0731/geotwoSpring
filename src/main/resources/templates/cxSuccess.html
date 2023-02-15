@@ -2,16 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Hello</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css">
+    <style>
+      .container {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .left {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin-left: 100px;
+        width: 50%;
+      }
+
+      .right {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin-left: 100px;
+        width: 50%;
+      }
+    </style>
 </head>
 <body>
-<div class="container">
-    <label for="schema">Schema</label>
-    <input type="text" id="schema" placeholder="Schema"><br>
-    <button onclick="postSchema()">Show Table List</button>
-</div>
-<div id="table-list"></div>
-<div id="column-list"></div>
+
 <script>
     function postSchema() {
         const xhr = new XMLHttpRequest();
@@ -28,9 +45,46 @@
                 tableListDiv.innerHTML = this.responseText;
             }
         };
-
         xhr.send(params);
     }
+
+         function selectTableRow(button) {
+        // Get the table row that contains the clicked button
+        var row = button.parentNode.parentNode;
+
+        // Get the data from the row
+        var tableNm = row.cells[0].textContent;
+        var params = "tableNm=" + encodeURIComponent(tableNm);
+        // Send an AJAX request to the server to get the column information for the selected table
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/showCol', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const columnListDiv = document.getElementById('column-list');
+                columnListDiv.innerHTML = this.responseText;
+            }
+        };
+        xhr.send(params);
+    }
+
+
 </script>
+<div class="container">
+    <div class="left">
+        <div class="container">
+            <label for="schema">Schema : </label>
+            <input type="text" id="schema" placeholder="Schema"><br>
+            <button onclick="postSchema()">Show Table List</button>
+        </div>
+        <div id="table-list"></div>
+    </div>
+    <div class="right">
+        <div id="column-list"></div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
 </body>
 </html>

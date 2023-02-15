@@ -87,7 +87,6 @@ public class ConnectService {
         while(rs.next()) {
             ArrayList<String> temp = new ArrayList<>();
             for(int i =0; i< columns.size(); i++) {
-                System.out.println(i);
                 String tempData = rs.getString(i+1);
                 temp.add(tempData);
             }

@@ -1,159 +1,95 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal -->
-<html lang="en" dir="ltr">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Responsive Chat Box Design | CodingNepal</title>
-    <style>
-
-        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-body{
-  background: #f2f2f2;
-}
-
-.wrapper{
-  position: absolute;
-  right: 30px;
-  bottom: 0px;
-  max-width: 400px;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
-  opacity: 0;
-  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
-}
-#click:checked ~ .wrapper{
-  opacity: 1;
-  bottom: 85px;
-}
-.wrapper .head-text{
-  line-height: 60px;
-  color: #fff;
-  border-radius: 15px 15px 0 0;
-  padding: 0 20px;
-  font-weight: 500;
-  font-size: 20px;
-  background: -webkit-linear-gradient(left, #a445b2, #fa4299);
-}
-.wrapper .chat-box{
-  padding: 20px;
-  width: 100%;
-}
-.chat-box .desc-text{
-  color: #515365;
-  text-align: center;
-  line-height: 25px;
-  font-size: 17px;
-  font-weight: 500;
-}
-.chat-box form{
-  padding: 10px 15px;
-  margin: 20px 0;
-  border-radius: 25px;
-  border: 1px solid lightgrey;
-}
-.chat-box form .field{
-  height: 50px;
-  width: 100%;
-  margin-top: 20px;
-}
-.chat-box form .field:last-child{
-  margin-bottom: 15px;
-}
-form .field input,
-form .field button,
-form .textarea textarea{
-  width: 100%;
-  height: 100%;
-  padding-left: 20px;
-  border: 1px solid lightgrey;
-  outline: none;
-  border-radius: 25px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-form .field input:focus,
-form .textarea textarea:focus{
-  border-color: #fc83bb;
-}
-form .field input::placeholder,
-form .textarea textarea::placeholder{
-  color: silver;
-  transition: all 0.3s ease;
-}
-form .field input:focus::placeholder,
-form .textarea textarea:focus::placeholder{
-  color: lightgrey;
-}
-.chat-box form .textarea{
-  height: 70px;
-  width: 100%;
-}
-.chat-box form .textarea textarea{
-  height: 100%;
-  border-radius: 50px;
-  resize: none;
-  padding: 15px 20px;
-  font-size: 16px;
-}
-.chat-box form .field button{
-  border: none;
-  outline: none;
-  cursor: pointer;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  background: -webkit-linear-gradient(left, #a445b2, #fa4299);
-  transition: all 0.3s ease;
-}
-.chat-box form .field button:active{
-  transform: scale(0.97);
-}
-
-    </style>
-    <!--    <link rel="stylesheet" href="css/style.css">-->
-    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <style>
+    h1{
+      margin-left: 800px;
+      margin-top: 200px;
+      margin-bottom: 5px;
+    }
+    label {
+      display: block;
+      margin-left: 800px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      margin-left: 800px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <div class="head-text">
-        DB Connect
-    </div>
-    <div class="chat-box">
-        <div class="desc-text">
-            필요한 정보를 입력해주세요
-        </div>
-        <form action="/connect" method="post">
-            <div class="field">
-                <input type="text" id="host" name="host" placeholder="IP">
-            </div>
-            <div class="field">
-                <input type="text" id="port" name="port" placeholder="PORT">
-            </div>
-            <div class="field">
-                <input type="text" id="sid" name="sid" placeholder="SID">
-            </div>
-            <div class="field">
-                <input type="text" id="userNm" name="userNm" placeholder="USER NAME">
-            </div>
-            <div class="field">
-                <input type="text" id="userPW" name="userPW" placeholder="USER PW">
-            </div>
-            <div class="field">
-                <input type="text" id="dbType" name="dbType" placeholder="DB Type">
-            </div>
-            <div class="field">
-                <button type="submit">DB 연결</button>
-            </div>
-        </form>
-    </div>
+<h1>DataBase Connect</h1>
+<div>
+  <label for="host">Host</label>
+  <input type="text" id="host" placeholder="Host"><br>
+
+  <label for="port">Port</label>
+  <input type="text" id="port" placeholder="Port"><br>
+
+  <label for="sid">Sid</label>
+  <input type="text" id="sid" placeholder="Sid"><br>
+
+  <label for="userNm">UserName</label>
+  <input type="text" id="userNm" placeholder="UserName"><br>
+
+  <label for="userPW">UserPw</label>
+  <input type="text" id="userPW" placeholder="UserPw"><br>
+
+  <label for="dbType">DBType</label>
+  <input type="text" id="dbType"  placeholder="DB Type">
+
+  <button onclick="postData()">연결</button>
 </div>
+
+<script>
+    function postData() {
+      const xhr = new XMLHttpRequest();
+      const url = '/connect';
+      const host = document.getElementById('host').value;
+      const port = document.getElementById('port').value;
+      const sid = document.getElementById('sid').value;
+      const userNm = document.getElementById('userNm').value;
+      const userPW = document.getElementById('userPW').value;
+      const dbType = document.getElementById('dbType').value;
+      const params = `host=${host}&port=${port}&sid=${sid}&userNm=${userNm}&userPW=${userPW}&dbType=${dbType}`;
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+      xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+          const result = JSON.parse(this.responseText);
+          if (result.status === 'success') {
+            alert('Connection successful');
+            location.replace('/success');
+          } else {
+            alert('Connection failed');
+            location.replace('/');
+          }
+        }
+    };
+
+      xhr.send(params);
+    }
+  </script>
 </body>
 </html>

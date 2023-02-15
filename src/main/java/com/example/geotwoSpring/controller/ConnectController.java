@@ -33,51 +33,17 @@ public class ConnectController {
     }
 
     @PostMapping("/connect")
-    public String create(UserForm userForm) {
-        UserDto user = new UserDto();
-        user.setHost(userForm.getHost());
-        user.setUserNm(userForm.getUserNm());
-        user.setPort(userForm.getPort());
-        user.setSid(userForm.getSid());
-        user.setUserPW(userForm.getUserPW());
-        user.setDbType(userForm.getDbType());
-
-        System.out.println("host : "+user.getHost());
-        System.out.println("port : "+user.getPort());
-        System.out.println("sid : "+user.getSid());
-        System.out.println("UserNm : "+user.getUserNm());
-        System.out.println("UserPw : "+user.getUserPW());
-        System.out.println("DBType : "+user.getDbType());
-
-        try{
-            if(cxService.connectDB(user)){
-                return "/cxSuccess";
-            }else{
-                throw new Exception();
-            }
-
-        }catch (Exception e){
-            return "/cxError";
-        }
-    }
-    @GetMapping("/ex")
-    public String exController(Model model){
-        return "/connectEx";
-    }
-    @PostMapping("/connect2")
     @ResponseBody
-    public HashMap<String, String> ajaxEx(UserDto user){
+    public HashMap<String, String> makeConnect(UserDto user){
         HashMap<String, String> result = new HashMap<>();
         try{
             if(cxService.connectDB(user)){
-                System.out.println("success");
                 result.put("status","success");
             }else{
                 throw new Exception();
             }
 
         }catch (Exception e){
-            System.out.println("error");
             result.put("status","fail");
         }
         return result;
@@ -98,10 +64,12 @@ public class ConnectController {
 
     @PostMapping(value = "/showCol")
     public String showColumn(String tableNm, Model model) throws SQLException {
-        ArrayList<ColumnInfo> columnInfos = cxService.getTableInfo(tableNm);
+        List<ColumnInfo> columnInfos = cxService.getTableInfo(tableNm);
+        System.out.println(tableNm);
         model.addAttribute("columnInfos", columnInfos);
         return "/showColumn";
     }
+
 
     @GetMapping(value = "/showData")
     public String showData(Model model) throws SQLException {
