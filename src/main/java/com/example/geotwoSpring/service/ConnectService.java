@@ -1,6 +1,7 @@
 package com.example.geotwoSpring.service;
 
 import com.example.geotwoSpring.dto.ColumnInfo;
+import com.example.geotwoSpring.dto.DatabaseType;
 import com.example.geotwoSpring.dto.UserDto;
 import org.springframework.stereotype.Service;
 

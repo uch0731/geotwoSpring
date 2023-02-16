@@ -32,9 +32,30 @@ public class ConnectController {
         return "connect";
     }
 
+//    @PostMapping("/connect")
+//    @ResponseBody
+//    public String makeConnect( UserDto user){
+//        System.out.println(user.getUserNm());
+//        HashMap<String, String> result = new HashMap<>();
+//        try{
+//            if(cxService.connectDB(user)){
+//                result.put("status","success");
+//                return "/success";
+//            }else{
+//                throw new Exception();
+//            }
+//
+//        }catch (Exception e){
+//            result.put("status","fail");
+//            return "/";
+//        }
+////        return result;
+//    }
+
     @PostMapping("/connect")
     @ResponseBody
-    public HashMap<String, String> makeConnect(UserDto user){
+    public HashMap<String, String> makeConnect( UserDto user){
+        System.out.println(user.getUserNm());
         HashMap<String, String> result = new HashMap<>();
         try{
             if(cxService.connectDB(user)){

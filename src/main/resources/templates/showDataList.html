@@ -16,13 +16,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="data2 : ${data}">
-                <td th:text="${data2}"></td>
-<!--                <td>-->
-<!--                    <p th:each="data1 : ${data2}">-->
-<!--                        <span th:text="${data1}">Street</span>-->
-<!--                    </p>-->
-<!--                </td>-->
+            <tr th:each="row : ${data}">
+                <td th:each="cell : ${row}" th:text="${cell}"></td>
             </tr>
             </tbody>
         </table>

@@ -1,95 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <style>
-    h1{
-      margin-left: 800px;
-      margin-top: 200px;
-      margin-bottom: 5px;
-    }
-    label {
-      display: block;
-      margin-left: 800px;
-      margin-top: 10px;
-      margin-bottom: 5px;
-    }
-    input[type="text"] {
-      margin-left: 800px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      margin-bottom: 10px;
-      width: 300px;
-    }
-    button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <link href="/css/page.css" rel="stylesheet">
 </head>
 <body>
-<h1>DataBase Connect</h1>
-<div>
-  <label for="host">Host</label>
-  <input type="text" id="host" placeholder="Host"><br>
+<script src="/js/page.js"></script>
+<div class="content">
+    <h1>DataBase Connect</h1>
+        <label for="host">Host</label>
+        <input type="text" id="host" placeholder="Host"><br>
 
-  <label for="port">Port</label>
-  <input type="text" id="port" placeholder="Port"><br>
+        <label for="port">Port</label>
+        <input type="text" id="port" placeholder="Port"><br>
 
-  <label for="sid">Sid</label>
-  <input type="text" id="sid" placeholder="Sid"><br>
+        <label for="sid">Sid</label>
+        <input type="text" id="sid" placeholder="Sid"><br>
 
-  <label for="userNm">UserName</label>
-  <input type="text" id="userNm" placeholder="UserName"><br>
+        <label for="userNm">UserName</label>
+        <input type="text" id="userNm" placeholder="UserName"><br>
 
-  <label for="userPW">UserPw</label>
-  <input type="text" id="userPW" placeholder="UserPw"><br>
+        <label for="userPW">UserPw</label>
+        <input type="text" id="userPW" placeholder="UserPw"><br>
 
-  <label for="dbType">DBType</label>
-  <input type="text" id="dbType"  placeholder="DB Type">
+        <label for="dbType">DBType</label>
+        <input type="text" id="dbType" placeholder="DB Type">
 
-  <button onclick="postData()">연결</button>
+        <button onclick="postData()">연결</button>
 </div>
-
-<script>
-    function postData() {
-      const xhr = new XMLHttpRequest();
-      const url = '/connect';
-      const host = document.getElementById('host').value;
-      const port = document.getElementById('port').value;
-      const sid = document.getElementById('sid').value;
-      const userNm = document.getElementById('userNm').value;
-      const userPW = document.getElementById('userPW').value;
-      const dbType = document.getElementById('dbType').value;
-      const params = `host=${host}&port=${port}&sid=${sid}&userNm=${userNm}&userPW=${userPW}&dbType=${dbType}`;
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-      xhr.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-          const result = JSON.parse(this.responseText);
-          if (result.status === 'success') {
-            alert('Connection successful');
-            location.replace('/success');
-          } else {
-            alert('Connection failed');
-            location.replace('/');
-          }
-        }
-    };
-
-      xhr.send(params);
-    }
-  </script>
 </body>
 </html>

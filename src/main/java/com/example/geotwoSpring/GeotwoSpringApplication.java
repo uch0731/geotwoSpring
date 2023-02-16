@@ -1,16 +1,9 @@
 package com.example.geotwoSpring;
 
-import com.example.geotwoSpring.dto.UserDto;
-import com.example.geotwoSpring.service.ConnectService;
-import com.example.geotwoSpring.service.DatabaseType;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})

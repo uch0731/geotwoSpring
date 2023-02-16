@@ -1,4 +1,4 @@
-package com.example.geotwoSpring.service;
+package com.example.geotwoSpring.dto;
 
 import java.util.Map;
 import java.util.function.Function;

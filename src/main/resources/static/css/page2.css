@@ -1,0 +1,18 @@
+.container {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .left {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin-left: 100px;
+        width: 50%;
+      }
+
+      .right {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        margin-left: 100px;
+        width: 50%;
+      }

@@ -1,4 +1,4 @@
-package com.example.geotwoSpring.controller;
+package com.example.geotwoSpring.dto;
 
 public class UserForm {
     private String host;
