@@ -69,7 +69,9 @@ public class ConnectService {
         rs.close();
         return columns;
     }
-
+    public ArrayList<ColumnInfo> getTableInfo() throws SQLException {
+        return getTableInfo(this.tableNm);
+    }
     public ArrayList<ArrayList<String>> selectAllFromTable() throws SQLException {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
@@ -97,5 +99,19 @@ public class ConnectService {
         rs.close();
         pst.close();
         return data;
+    }
+
+    public ArrayList<String> deleteData() throws SQLException {
+        ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
+        ArrayList<String> colNm = new ArrayList<>();
+        for (int i = 0; i < columns.size(); i++) {
+            colNm.add(columns.get(i).getName());
+        }
+        String query = "delete FROM " + tableNm;
+        PreparedStatement pst =conn.prepareStatement(query);
+        ResultSet rs = pst.executeQuery();
+        rs.close();
+        pst.close();
+        return colNm;
     }
 }
