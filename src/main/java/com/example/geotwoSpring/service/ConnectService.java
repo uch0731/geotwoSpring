@@ -5,8 +5,10 @@ import com.example.geotwoSpring.dto.DatabaseType;
 import com.example.geotwoSpring.dto.UserDto;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Service
 public class ConnectService {
@@ -72,6 +74,74 @@ public class ConnectService {
     public ArrayList<ColumnInfo> getTableInfo() throws SQLException {
         return getTableInfo(this.tableNm);
     }
+
+    public boolean insertIntoTable(ArrayList<ArrayList<String>> data) throws SQLException, IOException {
+        boolean error = false;
+        ArrayList<ColumnInfo> columnInfo = getTableInfo();
+        String s = " values (" + "?,".repeat(columnInfo.size() - 1) + "?)";
+
+        conn.setAutoCommit(false);
+        PreparedStatement pst = conn.prepareStatement("insert into " + tableNm + s);
+        int[] columnSequence = new int[columnInfo.size()];
+
+        //칼럼 이름으로 칼럼 순서 맞추기
+        for (int i = 0; i < columnSequence.length; i++) {
+            columnSequence[i] = data.get(0).indexOf(columnInfo.get(i).getName());
+        }
+
+        System.out.println(Arrays.toString(columnSequence));
+
+        for (int i = 1; i < data.size(); i++) {
+            for (int j = 0; j < columnSequence.length; j++) {
+                try {
+                    //type비교해서 맞으면 파라미터값 세팅, 틀리면 에러
+                    switch(columnInfo.get(j).getType()){
+                        case "VARCHAR2":
+                            boolean isNumeric = data.get(i).get(columnSequence[j]).chars().allMatch(Character::isDigit);
+                            //문자열에 정수 들어온경우 체크
+                            if (isNumeric) {
+                                throw new Exception("error");
+                            } else {
+                                pst.setString(j + 1, data.get(i).get(columnSequence[j]));
+                            }
+                            break;
+                        case "NUMBER":
+                            pst.setInt(j + 1, Integer.parseInt(data.get(i).get(columnSequence[j])));
+                            break;
+                        case "DATE":
+                            pst.setDate(j + 1, java.sql.Date.valueOf(data.get(i).get(columnSequence[j])));
+                            break;
+                    }
+                } catch (Exception e) { // 에러 나왔을 경우 error text 만들어주기
+                    error = true; //error flag true로 바꾸기
+                    CreateTxt errorTxt = CreateTxt.getInstance();
+                    //실패 row and column 전달
+                    errorTxt.createErrorTxt(i+1, columnSequence[j]+1);
+                }
+            }
+            //error 발생시 insert문 add안함
+            if(!error) {
+                pst.addBatch();
+                if ((i % 10) == 0) {
+                    pst.executeBatch();
+                    pst.clearBatch();
+                }
+            }
+        }
+        //error 발생시 커밋안함
+        if(error) {
+            System.out.println("ERROR ");
+            conn.rollback();
+        }else{
+            System.out.println("Data Insert");
+            pst.executeBatch();
+            conn.commit();
+        }
+
+        pst.close();
+        return error;
+    }
+
     public ArrayList<ArrayList<String>> selectAllFromTable() throws SQLException {
         ArrayList<ArrayList<String>> data = new ArrayList<>();
         ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
@@ -101,17 +171,18 @@ public class ConnectService {
         return data;
     }
 
-    public ArrayList<String> deleteData() throws SQLException {
-        ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
-        ArrayList<String> colNm = new ArrayList<>();
-        for (int i = 0; i < columns.size(); i++) {
-            colNm.add(columns.get(i).getName());
-        }
-        String query = "delete FROM " + tableNm;
+    public void deleteData() throws SQLException {
+//        ArrayList<ColumnInfo> columns = getTableInfo(tableNm);
+//        ArrayList<String> colNm = new ArrayList<>();
+//        for (int i = 0; i < columns.size(); i++) {
+//            colNm.add(columns.get(i).getName());
+//        }
+        System.out.println(tableNm);
+        String query = "DELETE FROM " + tableNm;
         PreparedStatement pst =conn.prepareStatement(query);
         ResultSet rs = pst.executeQuery();
         rs.close();
         pst.close();
-        return colNm;
+//        return colNm;
     }
 }
