@@ -139,6 +139,7 @@ public class ConnectService {
         }
 
         pst.close();
+        conn.setAutoCommit(true);
         return error;
     }
 

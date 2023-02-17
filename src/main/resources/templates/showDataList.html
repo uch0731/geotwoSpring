@@ -19,11 +19,13 @@
         <table class="table" style="margin-top: 20px;">
             <thead>
             <tr>
+                <th>#</th>
                 <th th:each="header : ${col}" th:text="${header}"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="row : ${data}">
+                <td th:text="${rowStat.count}"></td>
                 <td th:each="cell : ${row}" th:text="${cell}"></td>
             </tr>
             </tbody>
