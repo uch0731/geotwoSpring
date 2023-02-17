@@ -1,9 +1,9 @@
 package com.example.geotwoSpring.controller;
 
-import oracle.jdbc.proxy.annotation.Post;
 import com.example.geotwoSpring.dto.ColumnInfo;
 import com.example.geotwoSpring.dto.UserDto;
 import com.example.geotwoSpring.service.ConnectService;
+import com.example.geotwoSpring.service.DataBaseService;
 import com.example.geotwoSpring.service.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,18 +16,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ConnectController {
 
-    private final ExcelService excelService;
+    private final DataBaseService dbService;
     private final ConnectService cxService;
 
     @Autowired
-    public ConnectController(ConnectService cxService, ExcelService excelService) {
+    public ConnectController(ConnectService cxService, DataBaseService dbService) {
         this.cxService = cxService;
-        this.excelService = excelService;
+        this.dbService = dbService;
+
     }
 
     @GetMapping("/")
@@ -69,62 +69,10 @@ public class ConnectController {
 
     @PostMapping(value = "/showCol")
     public String showColumn(String tableNm, Model model) throws SQLException {
-        List<ColumnInfo> columnInfos = cxService.getTableInfo(tableNm);
+        List<ColumnInfo> columnInfos = cxService.getColumnInfo(tableNm);
         System.out.println(tableNm);
         model.addAttribute("columnInfos", columnInfos);
+        dbService.setTargetTable(cxService.getTargetTable());
         return "/showColumn";
     }
-
-
-    @GetMapping(value = "/showData")
-    public String showData(Model model) throws SQLException {
-        System.out.println("start");
-        ArrayList<ArrayList<String>> data = cxService.selectAllFromTable();
-        System.out.println(data);
-        model.addAttribute("col",data.get(0));
-        data.remove(0);
-        model.addAttribute("data", data);
-        return"/showDataList";
-    }
-
-    @GetMapping(value = "/deleteData")
-    public String deleteData(Model model) throws SQLException {
-        System.out.println("delete");
-        cxService.deleteData();
-        ArrayList<ArrayList<String>> data = cxService.selectAllFromTable();
-        System.out.println(data);
-        model.addAttribute("col",data.get(0));
-        data.remove(0);
-        model.addAttribute("data", data);
-        return"/showDataList";
-    }
-
-    @GetMapping(value = "/createExcel")
-    public String createExcel(Model model) throws SQLException, IOException {
-        System.out.println("create");
-        excelService.createExcelFromTable(cxService);
-        return"/showDataList";
-    }
-
-    @PostMapping(value = "/inputData")
-    @ResponseBody
-    public HashMap<String, String> inputData(@RequestParam("file") MultipartFile file) throws SQLException, IOException {
-        HashMap<String, String> result = new HashMap<>();
-        boolean fail = cxService.insertIntoTable(excelService.readExcel(file));
-        if(fail){
-            result.put("status","fail");
-        }else{
-            result.put("status","success");
-        }
-        return result;
-    }
-
-    //json 방식
-//    @PostMapping(value = "/inputData")
-//    public String InputData(@RequestBody HashMap<String, String> data, Model model) throws SQLException, IOException {
-//        System.out.println("input");
-//
-//        return"/showDataList";
-//    }
-
 }

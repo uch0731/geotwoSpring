@@ -77,11 +77,11 @@ public class ExcelService {
         return data;
     }
 
-    public void createExcelFromTable(ConnectService cxService)
+    public void createExcelFromTable(DataBaseService dbService)
             throws SQLException, IOException {
 
-        ArrayList<ArrayList<String>> data = cxService.selectAllFromTable();
-        ArrayList<ColumnInfo> columnInfo = cxService.getTableInfo();
+        ArrayList<ArrayList<String>> data = dbService.selectAllFromTable();
+        ArrayList<ColumnInfo> columnInfo = dbService.getTargetTable().getColumnInfo();
 
         XSSFWorkbook workBook = new XSSFWorkbook();
         Sheet xSheet = workBook.createSheet("1");;
