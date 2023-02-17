@@ -43,6 +43,7 @@ public class ConnectController {
         HashMap<String, String> result = new HashMap<>();
         try{
             if(cxService.connectDB(user)){
+                cxService.giveConnToDB(dbService);
                 result.put("status","success");
             }else{
                 throw new Exception();
@@ -69,8 +70,8 @@ public class ConnectController {
 
     @PostMapping(value = "/showCol")
     public String showColumn(String tableNm, Model model) throws SQLException {
-        List<ColumnInfo> columnInfos = cxService.getColumnInfo(tableNm);
         System.out.println(tableNm);
+        List<ColumnInfo> columnInfos = cxService.getColumnInfo(tableNm);
         model.addAttribute("columnInfos", columnInfos);
         dbService.setTargetTable(cxService.getTargetTable());
         return "/showColumn";

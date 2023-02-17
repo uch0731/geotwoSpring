@@ -19,7 +19,7 @@ public class ConnectService {
     private String tableNm;
     private String schema;
     private Connection conn;
-    private TableInfo targetTable;
+    private TableInfo targetTable = new TableInfo();
 
     public boolean connectDB (UserDto user) throws Exception {
         DatabaseType type = DatabaseType.valueOf(user.getDbType().trim().toUpperCase());
@@ -62,7 +62,7 @@ public class ConnectService {
     public ArrayList<ColumnInfo> getColumnInfo(String tableNm) throws SQLException {
 
         this.tableNm = tableNm.trim().toUpperCase();
-        targetTable.setTableName(this.tableNm);
+        this.targetTable.setTableName(this.tableNm);
         ArrayList<ColumnInfo> columns = new ArrayList<>();
         ResultSet rs = conn.getMetaData().getColumns(null, schema, this.tableNm, "%");
 
@@ -75,7 +75,7 @@ public class ConnectService {
         }
 
         rs.close();
-        targetTable.setColumnInfo(columns);
+        this.targetTable.setColumnInfo(columns);
         return columns;
     }
     public ArrayList<ColumnInfo> getColumnInfo() throws SQLException {
@@ -83,5 +83,23 @@ public class ConnectService {
     }
     public TableInfo getTargetTable(){
         return targetTable;
+    }
+
+    //DB connection 주기
+    public void giveConnToDB(DataBaseService dbService){
+        dbService.setConn(conn);
+    }
+
+
+    public void closeConnection() throws SQLException {
+        try{
+            if (conn != null
+                    || conn.isClosed())
+            {
+                conn.close();
+            }
+        } catch(Exception e){
+            // 로그
+        }
     }
 }
