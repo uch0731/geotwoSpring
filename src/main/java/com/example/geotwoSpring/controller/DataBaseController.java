@@ -33,6 +33,7 @@ public class DataBaseController {
         System.out.println("start");
         ArrayList<ArrayList<String>> data = dbService.selectAllFromTable();
         System.out.println(data);
+        model.addAttribute("tableNm", dbService.getTargetTable().getTableName());
         model.addAttribute("col",data.get(0));
         data.remove(0);
         model.addAttribute("data", data);

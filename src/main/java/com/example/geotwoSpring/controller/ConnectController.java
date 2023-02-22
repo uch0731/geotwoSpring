@@ -72,6 +72,7 @@ public class ConnectController {
     public String showColumn(String tableNm, Model model) throws SQLException {
         System.out.println(tableNm);
         List<ColumnInfo> columnInfos = cxService.getColumnInfo(tableNm);
+        model.addAttribute("tableNm", tableNm);
         model.addAttribute("columnInfos", columnInfos);
         dbService.setTargetTable(cxService.getTargetTable());
         return "/showColumn";

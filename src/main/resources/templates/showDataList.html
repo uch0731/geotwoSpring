@@ -16,7 +16,8 @@
     <button type="button" onclick="createExcel()">Create Excel</button>
     <button type="button" onclick="deleteData()">Delete Data</button>
     <div>
-        <table class="table" style="margin-top: 20px;">
+        <table class="table caption-top" style="margin-top: 20px;">
+            <caption th:text="${tableNm}"></caption>
             <thead>
             <tr>
                 <th>#</th>

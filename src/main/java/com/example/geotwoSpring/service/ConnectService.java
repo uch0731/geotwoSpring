@@ -78,6 +78,7 @@ public class ConnectService {
         this.targetTable.setColumnInfo(columns);
         return columns;
     }
+
     public ArrayList<ColumnInfo> getColumnInfo() throws SQLException {
         return getColumnInfo(this.tableNm);
     }
